@@ -189,8 +189,6 @@
         <div class="tab-container">
             <button class="tab-btn active" onclick="switchTab('main', this)">Main Code</button>
             <button class="tab-btn" onclick="switchTab('button', this)">$onInteraction[basic]</button>
-            <button class="tab-btn" onclick="switchTab('modal', this)">$onInteraction[advanced]</button>
-            <button class="tab-btn" onclick="switchTab('extra', this)">$onInteraction[close]</button>
         </div>
 
         <div class="code-container">
@@ -270,47 +268,7 @@ $else
 $ephemeral
 You’ve already opened this ticket!
 $removeAllComponents
-$endif`,
-
-            modal: `$nomention
-$defer
-$if[$findChannel[$getUserVar[ticket]]==]
-$createChannel[ticket-$replaceText[$replaceText[$username;.;];_;];text;CATEGORY ID HERE]
-   $var[ch;$findChannel[ticket-$replaceText[$replaceText[$username;.;];_;]]]
-$useChannel[$var[ch]]
-   $var[id;$sendEmbedMessage[$var[ch];<@&SUPPORT ROLE ID HERE> | <@$authorID>||;New Ticket!;;Welcome **$username**!
-Explain your issue so that our Team can assist you as soon a we can!;#00FFF9;;;Click 🔒 to close this ticket.;;;;no;yes]]
-$addButton[no;closed;Close;danger;no;🔒;$var[id]]
-$setUserVar[ticket;$var[ch]]
-$setChannelVar[belongsto;$authorID;$var[ch]]
-$setChannelVar[embedid;$authorID;$var[ch]]
- 
-$ephemeral
-$removeAllComponents
-Successfully opened a ticket! <#$var[ch]>
-$else
-$ephemeral
-$removeAllComponents
-You’ve already opened this ticket!
-$endif
-`,
-
-            extra: `$onInteraction[close]
- 
-$nomention
-$findChannel[$channelID]
-$deleteChannels[$channelID]
- 
-$onInteraction[closed]
-$nomention
-$findChannel[$channelID]
-$deleteChannels[$channelID]
- 
-$onInteraction[closing]
- 
-$nomention
-$findChannel[$channelID]
-$deleteChannels[$channelID]`
+$endif`
         };
 
         function switchTab(type, btn) {

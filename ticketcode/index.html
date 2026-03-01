@@ -184,7 +184,7 @@
         <p class="description">
             A simple yet powerful Container-based ticket system with transcript for Discord servers. Credits: <code>sp33d._druble</code>(30%) , <code>cenzo.tz</code>(30%) <code>kabir.exe.</code>(40%)<br>
             Requires variables: <code><span class="val-highlight">ticket (value= )</span></code>, <code><span class="val-highlight">embedid (value= none)</span></code>, and <code><span class="val-highlight">belongsto (value= none)</span></code>
-            ⚠️ Must fill all the highlighted areas
+            Required: Must fill <code>CATEGORY ID</code> , <code>TRANSCRIPT CHANNEL ID</code>
         </p>
 
         <div class="tab-container">
@@ -255,7 +255,7 @@ $addMediaGalleryItem[https://cdn.discordapp.com/attachments/1424703458321367201/
 $if[$customID==basic]
 
 $if[$findChannel[$getUserVar[ticket]]==]
-$createChannel[ticket-$replaceText[$replaceText[$username;.;];_;];text;<span class="val-highlight">CATAGORY ID</span>]
+$createChannel[ticket-$replaceText[$replaceText[$username;.;];_;];text;CATAGORY ID]
    $var[ch;$findChannel[ticket-$replaceText[$replaceText[$username;.;];_;]]]
    $modifyChannel[$var[ch];;$username[$authorID]]
 $useChannel[$var[ch]]
@@ -282,7 +282,7 @@ $endif
 $elseif[$customID==advanced]
 
 $if[$findChannel[$getUserVar[ticket]]==]
-$createChannel[ticket-$replaceText[$replaceText[$username;.;];_;];text;<span class="val-highlight">CATAGORY ID</span>]
+$createChannel[ticket-$replaceText[$replaceText[$username;.;];_;];text;CATAGORY ID]
    $var[ch;$findChannel[ticket-$replaceText[$replaceText[$username;.;];_;]]]
    $modifyChannel[$var[ch];;$username[$authorID]]
 $useChannel[$var[ch]]
@@ -327,7 +327,7 @@ $httpPost[https://ulquiorracifer.xyz/api/transcript;
   "botToken":"$getVar[BotToken]",
   "channelId":"$channelID",
   "ownerId":"$channelTopic",
-  "transcriptChannelId":"<span class="val-highlight">TRANSCRIPT CHANNEL ID</span>"
+  "transcriptChannelId":"TRANSCRIPT CHANNEL ID"
 }
 ]
 

@@ -182,8 +182,9 @@
     <div class="container">
         <h1>Ticket System</h1>
         <p class="description">
-            A simple yet powerful Container-based ticket system for Discord servers. Credits: <code>sp33d._druble</code>(30%) , <code>cenzo.tz</code>(30%) <code>kabir.exe.</code>(40%)<br>
+            A simple yet powerful Container-based ticket system with transcript for Discord servers. Credits: <code>sp33d._druble</code>(30%) , <code>cenzo.tz</code>(30%) <code>kabir.exe.</code>(40%)<br>
             Requires variables: <code><span class="val-highlight">ticket (value= )</span></code>, <code><span class="val-highlight">embedid (value= none)</span></code>, and <code><span class="val-highlight">belongsto (value= none)</span></code>
+            ⚠️ Must fill all the highlighted areas
         </p>
 
         <div class="tab-container">
@@ -198,23 +199,23 @@
             </div>
             <div class="code-block">
 <pre id="code-content">$nomention
-$deletecommand
 $addContainer[ticket]
+$addTextDisplay[## Ticket Panel;ticket]
+$addSeparator[true;Small;ticket]
+$addTextDisplay[***Basic*** 
+> For Claiming Price.
+> For Reporting a Member.;ticket]
 $addSeparator[true;;ticket]
-$addTextDisplay[**BASIC**
-> General Inquiries
-> Questions About This Server;ticket]
+$addActionRow[ticketrow1;ticket]
+$addButtonCV2[basic;Basic;secondary;false;🎟️;ticketrow1]
 $addSeparator[true;;ticket]
-$addTextDisplay[**ADVANCED**
-> Report Staff or Member
-> Partnership Request;ticket]
-$addSeparator[true;;ticket]
-$addActionRow[ticketbutton;ticket]
-$addButtonCV2[general;Basic Support;secondary;no;;ticketbutton]
-$addButtonCV2[advanced;Advanced Support;secondary;no;;ticketbutton]
-$addTextDisplay[-# This can be used as your footer;ticket]
-$addMediaGallery[media1;ticket]
-$addMediaGalleryItem[Media URL;;;media1]</pre>
+$addTextDisplay[***Advanced***
+> For Reporting a Staff.
+> For Partnership.;ticket]
+$addActionRow[ticketrow2;ticket]
+$addButtonCV2[advanced;Advanced;danger;false;🎫;ticketrow2]
+$addMediaGallery[ticketmedia;ticket]
+$addMediaGalleryItem[https://cdn.discordapp.com/attachments/1424703458321367201/1477605916529528853/1f6a1fd9888f43a5.gif?ex=69a55f3f&is=69a40dbf&hm=bfbd6eb81f6a8011fd70212cc9bd8dcbc27b0f4de011ece3c4312f594ca56112&;;;ticketmedia]</pre>
             </div>
         </div>
     </div>
@@ -231,28 +232,32 @@ $addMediaGalleryItem[Media URL;;;media1]</pre>
     <script>
         const codes = {
             main: `$nomention
-$deletecommand
 $addContainer[ticket]
+$addTextDisplay[## Ticket Panel;ticket]
+$addSeparator[true;Small;ticket]
+$addTextDisplay[***Basic*** 
+> For Claiming Price.
+> For Reporting a Member.;ticket]
 $addSeparator[true;;ticket]
-$addTextDisplay[**BASIC**
-> General Inquiries
-> Questions About This Server;ticket]
+$addActionRow[ticketrow1;ticket]
+$addButtonCV2[basic;Basic;secondary;false;🎟️;ticketrow1]
 $addSeparator[true;;ticket]
-$addTextDisplay[**ADVANCED**
-> Report Staff or Member
-> Partnership Request;ticket]
-$addSeparator[true;;ticket]
-$addActionRow[ticketbutton;ticket]
-$addButtonCV2[general;Basic Support;secondary;no;;ticketbutton]
-$addButtonCV2[advanced;Advanced Support;secondary;no;;ticketbutton]
-$addTextDisplay[-# This can be used as your footer;ticket]
-$addMediaGallery[media1;ticket]
-$addMediaGalleryItem[Media URL;;;media1]`,
+$addTextDisplay[***Advanced***
+> For Reporting a Staff.
+> For Partnership.;ticket]
+$addActionRow[ticketrow2;ticket]
+$addButtonCV2[advanced;Advanced;danger;false;🎫;ticketrow2]
+$addMediaGallery[ticketmedia;ticket]
+$addMediaGalleryItem[https://cdn.discordapp.com/attachments/1424703458321367201/1477605916529528853/1f6a1fd9888f43a5.gif?ex=69a55f3f&is=69a40dbf&hm=bfbd6eb81f6a8011fd70212cc9bd8dcbc27b0f4de011ece3c4312f594ca56112&;;;ticketmedia]`,
             
             button: `$nomention
+
+$if[$customID==basic]
+
 $if[$findChannel[$getUserVar[ticket]]==]
-$createChannel[ticket-$replaceText[$replaceText[$username;.;];_;];text;CATEGORY ID HERE]
+$createChannel[ticket-$replaceText[$replaceText[$username;.;];_;];text;<span class="val-highlight">CATAGORY ID</span>]
    $var[ch;$findChannel[ticket-$replaceText[$replaceText[$username;.;];_;]]]
+   $modifyChannel[$var[ch];;$username[$authorID]]
 $useChannel[$var[ch]]
    $var[id;$sendEmbedMessage[$var[ch];<@&SUPPORT ROLE ID> | <@$authorID>||;New Ticket!;;Welcome **$username**!
 Explain your issue so that our Team can assist you as soon a we can!;#00FFF9;;;Click 🔒 to close this ticket.;$serverIcon;;;no;yes]]
@@ -262,12 +267,73 @@ $setChannelVar[belongsto;$authorID;$var[ch]]
 $setChannelVar[embedid;$authorID;$var[ch]]
  
 $ephemeral
-Successfully opened a ticket! <#$var[ch]>
+$addContainer[success;#ff0000]
+$addTextDisplay[Successfully opened a ticket! <#$var[ch]>;success]
 $removeAllComponents
+
 $else
 $ephemeral
-You’ve already opened this ticket!
+$addContainer[error;#00ff00]
+$addTextDisplay[You’ve already opened this ticket!;error]
 $removeAllComponents
+
+$endif
+
+$elseif[$customID==advanced]
+
+$if[$findChannel[$getUserVar[ticket]]==]
+$createChannel[ticket-$replaceText[$replaceText[$username;.;];_;];text;<span class="val-highlight">CATAGORY ID</span>]
+   $var[ch;$findChannel[ticket-$replaceText[$replaceText[$username;.;];_;]]]
+   $modifyChannel[$var[ch];;$username[$authorID]]
+$useChannel[$var[ch]]
+   $var[id;$sendEmbedMessage[$var[ch];<@&SUPPORT ROLE ID> | <@$authorID>||;New Ticket!;;Welcome **$username**!
+Plas use the format below 
+
+> If you want to report someone 
+```
+User: <user ID/username>
+Reason: <reason>
+Proof: <image link/attachment/forward a message>
+```
+
+> If you want to partner us
+```
+Server: <invite link>
+Server Owner: <user ID/usrname>
+Reason: <why?>
+```;#00FFF9;;;Click 🔒 to close this ticket.;$serverIcon;;;no;yes]]
+$addButton[no;close;Close;danger;no;🔒;$var[id]]
+$setUserVar[ticket;$var[ch]]
+$setChannelVar[belongsto;$authorID;$var[ch]]
+$setChannelVar[embedid;$authorID;$var[ch]]
+ 
+$ephemeral
+$addContainer[success;#ff0000]
+$addTextDisplay[Successfully opened a ticket! <#$var[ch]>;success]
+$removeAllComponents
+
+$else
+$ephemeral
+$addContainer[error;#00ff00]
+$addTextDisplay[You’ve already opened this ticket!;error]
+$removeAllComponents
+
+$endif
+
+$elseif[$customID==close]
+
+$httpPost[https://ulquiorracifer.xyz/api/transcript;
+{
+  "botToken":"$getVar[BotToken]",
+  "channelId":"$channelID",
+  "ownerId":"$channelTopic",
+  "transcriptChannelId":"<span class="val-highlight">TRANSCRIPT CHANNEL ID</span>"
+}
+]
+
+$findChannel[$channelID]
+$deleteChannels[$channelID]
+
 $endif`
         };
 

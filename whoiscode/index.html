@@ -1,1 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket System | Sha?dow</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;600&family=Courier+Prime&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --accent: #00f7ff;
+            --text-main: #e0e0e0;
+            --text-dim: #888888;
+            --card-bg: #111111;
+            --border: rgba(255, 255, 255, 0.1);
+            --grad: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 100%);
+        }
 
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* --- NAVIGATION --- */
+        .nav-header {
+            width: 100%;
+            max-width: 1000px;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo { 
+            font-family: 'Orbitron', sans-serif; 
+            font-size: 1.1rem; 
+            font-weight: 700; 
+            letter-spacing: 2px; 
+            text-decoration: none; 
+            color: white; 
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .back-link i {
+            font-size: 0.8rem;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .back-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 100%;
+            height: 3px;
+            background: var(--grad);
+            border-radius: 2px;
+        }
+
+        .back-link:hover { opacity: 0.8; transform: translateX(-3px); }
+
+        /* --- CONTENT --- */
+        .container {
+            margin-top: 20px;
+            max-width: 850px;
+            width: 95%;
+            text-align: left;
+        }
+
+        h1 { 
+            font-family: 'Orbitron', sans-serif; 
+            font-size: 2.2rem; 
+            margin-bottom: 10px;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .description { color: var(--text-dim); margin-bottom: 30px; font-size: 0.9rem; line-height: 1.8; }
+        
+        code { background: #1a1a1a; padding: 3px 8px; border-radius: 4px; color: #fff; border: 1px solid var(--border); font-family: 'Courier Prime', monospace; font-size: 0.85rem; }
+        .val-highlight { color: var(--accent); font-weight: bold; }
+
+        /* --- TABS --- */
+        .tab-container { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
+        .tab-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            transition: 0.3s;
+        }
+        .tab-btn.active {
+            border-color: #3a7bd5;
+            color: white;
+            background: rgba(58, 123, 213, 0.1);
+        }
+
+        /* --- CODE BOX --- */
+        .code-container {
+            position: relative;
+            background-color: #050505;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .code-header {
+            background: #111;
+            padding: 10px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .lang-label { font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+
+        .code-block { padding: 25px; overflow-x: auto; }
+        pre { 
+            margin: 0; 
+            font-family: 'Courier Prime', monospace; 
+            color: #e0e0e0; 
+            line-height: 1.6; 
+            white-space: pre-wrap; 
+            font-size: 0.9rem;
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            padding: 5px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            font-family: 'Orbitron', sans-serif;
+            transition: 0.2s;
+        }
+        .copy-btn:hover { background: white; color: black; border-color: white; }
+
+        /* --- FOOTER --- */
+        .footer { padding: 60px 20px; text-align: center; margin-top: auto; }
+        .social-icons { display: flex; gap: 25px; justify-content: center; margin-bottom: 20px; }
+        .social-icons a { color: var(--text-dim); font-size: 1.5rem; transition: 0.3s; }
+        .social-icons a:hover { color: #00d2ff; transform: scale(1.1); }
+        .tilt { transform: rotate(-35deg); display: inline-block; }
+    </style>
+</head>
+<body>
+
+    <nav class="nav-header">
+        <a href="index.html" class="nav-logo">SHA?DOW</a>
+        <div class="nav-links">
+            <a href="https://ikabir.vercel.app" class="back-link">
+                <i class="fa-solid fa-chevron-left"></i> Back
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Ticket System</h1>
+        <p class="description">
+            A simple yet powerful Container-based ticket system with transcript for Discord servers. Credits: <code>sp33d._druble</code>(30%) , <code>cenzo.tz</code>(30%) <code>kabir.exe.</code>(40%)<br>
+            Requires variables: <code><span class="val-highlight">ticket (value= )</span></code>, <code><span class="val-highlight">embedid (value= none)</span></code>, and <code><span class="val-highlight">belongsto (value= none)</span></code>
+            Required: Must fill <code>CATEGORY ID</code> , <code>TRANSCRIPT CHANNEL ID</code>
+        </p>
+
+        <div class="tab-container">
+            <button class="tab-btn active" onclick="switchTab('main', this)">Main Code</button>
+            <button class="tab-btn" onclick="switchTab('button', this)">$onInteraction</button>
+        </div>
+
+        <div class="code-container">
+            <div class="code-header">
+                <span class="lang-label" id="lang-label">BDScript 2</span>
+                <button class="copy-btn" onclick="copyCode()">Copy</button>
+            </div>
+            <div class="code-block">
+<pre id="code-content">$nomention
+$argsCheck[1;Usage: `?who <mention>`]
+$var[user;$mentioned[>]]
+$var[api;https://japi.rest/discord/v1/user/$var[user]]
+$httpGet[$var[api]]
+$var[result;$httpResult[data;public_flags_array]]
+$var[array;$toTitleCase[$replaceText[$var[result];_; ]]]
+$var[no-array;$replaceText[$replaceText[$replaceText[$replaceText[$var[array];[;];\];];";];,;, ]]
+$var[badges;$var[no-array]]
+$var[tag;"$httpResult[data;clan;tag]"]
+$var[gname;$httpResult[data;global_name]]
+$var[cstatus;`$getCustomStatus[$var[user]]`]
+$async[created]
+$httpGet[https://helloacm.com/api/unix-timestamp-converter/?cached&s=$creationDate[$var[user];2006/01/02+03:04:05]]
+$httpResult
+$endasync
+$var[created;<t:$trimSpace[$await[created]]:R> ( <t:$trimSpace[$await[created]]> )]
+$async[joined]
+$httpGet[https://helloacm.com/api/unix-timestamp-converter/?cached&s=$userJoined[$var[user];2006/01/02+03:04:05]]
+$httpResult
+$endasync
+$var[joined;<t:$trimSpace[$await[joined]]:R> ( <t:$trimSpace[$await[joined]]> )]
+$addContainer[who;$getRoleColor[$highestRole[$var[user]]]]
+$addTextDisplay[-# $replaceText[$replaceText[$replaceText[$replaceText[$getUserStatus[$var[user]];online;<:online:1478748079313391697>;1];dnd;<:dnd:1478748119717122070>;1];idle;<:idle:1478748081427054612>;1];offline;<:offline:1478748123085148281>;1]  $username[$var[user]] • $var[gname];who]
+$addSeparator[true;;who]
+$addTextDisplay[__Basic Info__
+Dm's: $replaceText[$replaceText[$isUserDMEnabled[$var[user]];false;<a:1000624861:1478633401048236084>;-1];true;<a:1000624863:1478633391812378736>;-1]
+Tag: $var[tag]
+Custom Status: `$getCustomStatus[$var[user]]`
+Badges: $var[badges];who]
+$addSeparator[true;;who]
+$addTextDisplay[__Account Info__
+Created: $var[created]
+Joined: $var[joined];who]
+$addSeparator[true;;who]
+$addTextDisplay[__Extra Info__
+Mention: `<@$var[user]>`
+Highest Role: $roleName[$highestRole[$var[user]]];who]]
+$addActionRow[whorow;who]
+$addButtonCV2[avatar-$var[user]-$authorID;Avatar/Banner;secondary;false;;whorow]
+$addButtonCV2[roles-$var[user]-$authorID;Roles;success;false;;whorow]
+$addButtonCV2[perms-$var[user]-$authorID;Permissions;danger;false;;whorow]</pre>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="social-icons">
+            <a href="https://discord.gg/void"><i class="fa-brands fa-discord"></i></a>
+            <a href="mailto:kabir0juneja@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+            <a href="https://guns.lol/kabirjuneja"><i class="fa-solid fa-gun tilt"></i></a>
+        </div>
+        <p style="color: #444; font-size: 0.75rem; letter-spacing: 1px;">© 2026 KABIR JUNEJA. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <script>
+        const codes = {
+            main: `$nomention
+$argsCheck[1;Usage: `?who <mention>`]
+$var[user;$mentioned[>]]
+$var[api;https://japi.rest/discord/v1/user/$var[user]]
+$httpGet[$var[api]]
+$var[result;$httpResult[data;public_flags_array]]
+$var[array;$toTitleCase[$replaceText[$var[result];_; ]]]
+$var[no-array;$replaceText[$replaceText[$replaceText[$replaceText[$var[array];[;];\];];";];,;, ]]
+$var[badges;$var[no-array]]
+$var[tag;"$httpResult[data;clan;tag]"]
+$var[gname;$httpResult[data;global_name]]
+$var[cstatus;`$getCustomStatus[$var[user]]`]
+$async[created]
+$httpGet[https://helloacm.com/api/unix-timestamp-converter/?cached&s=$creationDate[$var[user];2006/01/02+03:04:05]]
+$httpResult
+$endasync
+$var[created;<t:$trimSpace[$await[created]]:R> ( <t:$trimSpace[$await[created]]> )]
+$async[joined]
+$httpGet[https://helloacm.com/api/unix-timestamp-converter/?cached&s=$userJoined[$var[user];2006/01/02+03:04:05]]
+$httpResult
+$endasync
+$var[joined;<t:$trimSpace[$await[joined]]:R> ( <t:$trimSpace[$await[joined]]> )]
+$addContainer[who;$getRoleColor[$highestRole[$var[user]]]]
+$addTextDisplay[-# $replaceText[$replaceText[$replaceText[$replaceText[$getUserStatus[$var[user]];online;<:online:1478748079313391697>;1];dnd;<:dnd:1478748119717122070>;1];idle;<:idle:1478748081427054612>;1];offline;<:offline:1478748123085148281>;1]  $username[$var[user]] • $var[gname];who]
+$addSeparator[true;;who]
+$addTextDisplay[__Basic Info__
+Dm's: $replaceText[$replaceText[$isUserDMEnabled[$var[user]];false;<a:1000624861:1478633401048236084>;-1];true;<a:1000624863:1478633391812378736>;-1]
+Tag: $var[tag]
+Custom Status: `$getCustomStatus[$var[user]]`
+Badges: $var[badges];who]
+$addSeparator[true;;who]
+$addTextDisplay[__Account Info__
+Created: $var[created]
+Joined: $var[joined];who]
+$addSeparator[true;;who]
+$addTextDisplay[__Extra Info__
+Mention: `<@$var[user]>`
+Highest Role: $roleName[$highestRole[$var[user]]];who]]
+$addActionRow[whorow;who]
+$addButtonCV2[avatar-$var[user]-$authorID;Avatar/Banner;secondary;false;;whorow]
+$addButtonCV2[roles-$var[user]-$authorID;Roles;success;false;;whorow]
+$addButtonCV2[perms-$var[user]-$authorID;Permissions;danger;false;;whorow]`,
+            
+            button: `$nomention
+
+$if[$customID==basic]
+
+$if[$findChannel[$getUserVar[ticket]]==]
+$createChannel[ticket-$replaceText[$replaceText[$username;.;];_;];text;CATAGORY ID]
+   $var[ch;$findChannel[ticket-$replaceText[$replaceText[$username;.;];_;]]]
+   $modifyChannel[$var[ch];;$username[$authorID]]
+$useChannel[$var[ch]]
+   $var[id;$sendEmbedMessage[$var[ch];<@&SUPPORT ROLE ID> | <@$authorID>||;New Ticket!;;Welcome **$username**!
+Explain your issue so that our Team can assist you as soon a we can!;#00FFF9;;;Click 🔒 to close this ticket.;$serverIcon;;;no;yes]]
+$addButton[no;close;Close;danger;no;🔒;$var[id]]
+$setUserVar[ticket;$var[ch]]
+$setChannelVar[belongsto;$authorID;$var[ch]]
+$setChannelVar[embedid;$authorID;$var[ch]]
+ 
+$ephemeral
+$addContainer[success;#ff0000]
+$addTextDisplay[Successfully opened a ticket! <#$var[ch]>;success]
+$removeAllComponents
+
+$else
+$ephemeral
+$addContainer[error;#00ff00]
+$addTextDisplay[You’ve already opened this ticket!;error]
+$removeAllComponents
+
+$endif
+
+$elseif[$customID==advanced]
+
+$if[$findChannel[$getUserVar[ticket]]==]
+$createChannel[ticket-$replaceText[$replaceText[$username;.;];_;];text;CATAGORY ID]
+   $var[ch;$findChannel[ticket-$replaceText[$replaceText[$username;.;];_;]]]
+   $modifyChannel[$var[ch];;$username[$authorID]]
+$useChannel[$var[ch]]
+   $var[id;$sendEmbedMessage[$var[ch];<@&SUPPORT ROLE ID> | <@$authorID>||;New Ticket!;;Welcome **$username**!
+Plas use the format below 
+
+> If you want to report someone 
+\`\`\`
+User: [user ID/username]
+Reason: [reason]
+Proof: [image link/attachment/forward a message]
+\`\`\`
+
+> If you want to partner us
+\`\`\`
+Server: [invite link]
+Server Owner: [user ID/usrname]
+Reason: [why?]
+\`\`\`;#00FFF9;;;Click 🔒 to close this ticket.;$serverIcon;;;no;yes]]
+$addButton[no;close;Close;danger;no;🔒;$var[id]]
+$setUserVar[ticket;$var[ch]]
+$setChannelVar[belongsto;$authorID;$var[ch]]
+$setChannelVar[embedid;$authorID;$var[ch]]
+ 
+$ephemeral
+$addContainer[success;#ff0000]
+$addTextDisplay[Successfully opened a ticket! <#$var[ch]>;success]
+$removeAllComponents
+
+$else
+$ephemeral
+$addContainer[error;#00ff00]
+$addTextDisplay[You’ve already opened this ticket!;error]
+$removeAllComponents
+
+$endif
+
+$elseif[$customID==close]
+
+$httpPost[https://ulquiorracifer.xyz/api/transcript;
+{
+  "botToken":"$getVar[BotToken]",
+  "channelId":"$channelID",
+  "ownerId":"$channelTopic",
+  "transcriptChannelId":"TRANSCRIPT CHANNEL ID"
+}
+]
+
+$findChannel[$channelID]
+$deleteChannels[$channelID]
+
+$endif`
+        };
+
+        function switchTab(type, btn) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            btn.classList.add('active');
+            // Update the text content
+            document.getElementById('code-content').textContent = codes[type];
+        }
+
+        function copyCode() {
+            const code = document.getElementById('code-content').textContent;
+            const btn = document.querySelector('.copy-btn');
+            navigator.clipboard.writeText(code).then(() => {
+                btn.innerText = 'Copied!';
+                setTimeout(() => { btn.innerText = 'Copy'; }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

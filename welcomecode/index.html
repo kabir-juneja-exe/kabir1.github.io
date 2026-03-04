@@ -1,1 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin Price Checker | Sha?dow</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;600&family=Courier+Prime&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --accent: #00f7ff;
+            --text-main: #e0e0e0;
+            --text-dim: #888888;
+            --card-bg: #111111;
+            --border: rgba(255, 255, 255, 0.1);
+            --grad: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 100%);
+        }
 
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* --- NAVIGATION --- */
+        .nav-header {
+            width: 100%;
+            max-width: 1000px;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo { 
+            font-family: 'Orbitron', sans-serif; 
+            font-size: 1.1rem; 
+            font-weight: 700; 
+            letter-spacing: 2px; 
+            text-decoration: none; 
+            color: white; 
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .back-link i {
+            font-size: 0.8rem;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .back-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 100%;
+            height: 3px;
+            background: var(--grad);
+            border-radius: 2px;
+            transition: 0.3s ease;
+        }
+
+        .back-link:hover { opacity: 0.8; transform: translateX(-3px); }
+
+        /* --- CONTENT --- */
+        .container {
+            margin-top: 20px;
+            max-width: 850px;
+            width: 95%;
+            text-align: left;
+        }
+
+        h1 { 
+            font-family: 'Orbitron', sans-serif; 
+            font-size: 2.2rem; 
+            margin-bottom: 10px;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .description { color: var(--text-dim); margin-bottom: 30px; font-size: 0.95rem; }
+
+        /* --- TABS --- */
+        .tab-container { display: flex; gap: 10px; margin-bottom: 15px; }
+        .tab-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            padding: 10px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            transition: 0.3s;
+        }
+        .tab-btn.active {
+            border-color: #3a7bd5;
+            color: white;
+            background: rgba(58, 123, 213, 0.1);
+        }
+
+        /* --- CODE BOX --- */
+        .code-container {
+            position: relative;
+            background-color: #050505;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .code-header {
+            background: #111;
+            padding: 10px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .lang-label { font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+
+        .code-block { padding: 25px; overflow-x: auto; }
+        pre { 
+            margin: 0; 
+            font-family: 'Courier Prime', monospace; 
+            color: #e0e0e0; 
+            line-height: 1.6; 
+            white-space: pre-wrap; 
+            font-size: 0.9rem;
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            padding: 5px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            font-family: 'Orbitron', sans-serif;
+            transition: 0.2s;
+        }
+        .copy-btn:hover { background: white; color: black; border-color: white; }
+
+        /* --- FOOTER (Tilted Icon Sync) --- */
+        .footer { padding: 60px 20px; text-align: center; margin-top: auto; }
+        .social-icons { display: flex; gap: 25px; justify-content: center; margin-bottom: 20px; }
+        .social-icons a { color: var(--text-dim); font-size: 1.5rem; transition: 0.3s; }
+        .social-icons a:hover { color: #00d2ff; transform: scale(1.1); }
+        .tilt { transform: rotate(-35deg); display: inline-block; }
+
+    </style>
+</head>
+<body>
+
+    <nav class="nav-header">
+        <a href="index.html" class="nav-logo">SHA?DOW</a>
+        <div class="nav-links">
+            <a href="https://ikabir.vercel.app" class="back-link">
+                <i class="fa-solid fa-chevron-left"></i> Back
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Welcome/Leave Message</h1>
+        <p class="description">A Welcome/Leave message code for BDScript 2 by "kabir.exe."</p>
+
+        <div class="tab-container">
+            <button class="tab-btn active" onclick="switchTab('embed', this)">$onJoined[CHANNEL ID]</button>
+            <button class="tab-btn" onclick="switchTab('container', this)">$onLeave[CHANNEL ID]</button>
+        </div>
+
+        <div class="code-container">
+            <div class="code-header">
+                <span class="lang-label">BDScript 2</span>
+                <button class="copy-btn" onclick="copyCode()">Copy</button>
+            </div>
+            <div class="code-block">
+<pre id="code-content">$nomention
+$argsCheck[1;Usage: `.btc {currency}`]
+
+$if[$message[1]==inr]$var[$;₹]
+$elseif[$message[1]==usd]$var[$;$]
+$elseif[$message[1]==eur]$var[$;€]
+$elseif[$message[1]==jpy]$var[$;¥]
+$elseif[$message[1]==php]$var[$;₱]
+$elseif[$message[1]==rub]$var[$;₽]
+$elseif[$message[1]==pkr]$var[$;Rs]
+$elseif[$message[1]==sgd]$var[$;S$]
+
+$endif
+
+$httpGet[https://api.coingecko.com/api/v3/coins/markets?vs_currency=$message[1]]
+$author[Bitcoin (BTC) price in $toUppercase[$message[1]]]
+$authorIcon[https://cdn.discordapp.com/attachments/1446064234877157509/1446064286605512714/2048px-Bitcoin.svg.png]
+$addField[💲 Price;**$var[$]**$numberSeparator[$round[$httpResult[0;current_price]]]]
+$addField[📈 Highest (24h);**$var[$]**$numberSeparator[$round[$httpResult[0;high_24h]]]]
+$addField[📉 Lowest (24h);**$var[$]**$numberSeparator[$round[$httpResult[0;low_24h]]]]
+$color[ffffff]
+$footer[Source www.coingecko.com]
+$footerIcon[https://cdn.discordapp.com/attachments/1446064234877157509/1446070067681820693/CoinGecko.png]</pre>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="social-icons">
+            <a href="https://discord.gg/void"><i class="fa-brands fa-discord"></i></a>
+            <a href="mailto:kabir0juneja@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+            <a href="https://guns.lol/kabirjuneja"><i class="fa-solid fa-gun tilt"></i></a>
+        </div>
+        <p style="color: #444; font-size: 0.75rem; letter-spacing: 1px;">© 2026 KABIR JUNEJA. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <script>
+        const codes = {
+            embed: `$nomention
+$argsCheck[1;Usage: \`.btc {currency}\`]
+
+$if[$message[1]==inr]$var[$;₹]
+$elseif[$message[1]==usd]$var[$;$]
+$elseif[$message[1]==eur]$var[$;€]
+$elseif[$message[1]==jpy]$var[$;¥]
+$elseif[$message[1]==php]$var[$;₱]
+$elseif[$message[1]==rub]$var[$;₽]
+$elseif[$message[1]==pkr]$var[$;Rs]
+$elseif[$message[1]==sgd]$var[$;S$]
+
+$endif
+
+$httpGet[https://api.coingecko.com/api/v3/coins/markets?vs_currency=$message[1]]
+$author[Bitcoin (BTC) price in $toUppercase[$message[1]]]
+$authorIcon[https://cdn.discordapp.com/attachments/1446064234877157509/1446064286605512714/2048px-Bitcoin.svg.png]
+$addField[💲 Price;**$var[$]**$numberSeparator[$round[$httpResult[0;current_price]]]]
+$addField[📈 Highest (24h);**$var[$]**$numberSeparator[$round[$httpResult[0;high_24h]]]]
+$addField[📉 Lowest (24h);**$var[$]**$numberSeparator[$round[$httpResult[0;low_24h]]]]
+$color[ffffff]
+$footer[Source www.coingecko.com]
+$footerIcon[https://cdn.discordapp.com/attachments/1446064234877157509/1446070067681820693/CoinGecko.png]`,
+            
+            container: `$nomention
+$argsCheck[1;Usage: \`.btc {currency}\`]
+
+$if[$message[1]==inr]$var[$;₹]
+$elseif[$message[1]==usd]$var[$;$]
+$elseif[$message[1]==eur]$var[$;€]
+$elseif[$message[1]==jpy]$var[$;¥]
+$elseif[$message[1]==php]$var[$;₱]
+$elseif[$message[1]==rub]$var[$;₽]
+$elseif[$message[1]==pkr]$var[$;Rs]
+$elseif[$message[1]==sgd]$var[$;S$]
+
+$endif
+
+$httpGet[https://api.coingecko.com/api/v3/coins/markets?vs_currency=$message[1]]
+$addContainer[btc]
+$addTextDisplay[### Bitcoin Price ($toUppercase[$message[1]]);btc]
+$addSeparator[true;Large;btc]
+$addTextDisplay[💲 Price: **$var[$]**$numberSeparator[$round[$httpResult[0;current_price]]];btc]
+$addSeparator[true;Small;btc]
+$addTextDisplay[📈 Highest (24h): **$var[$]**$numberSeparator[$round[$httpResult[0;high_24h]]];btc]
+$addSeparator[true;Small;btc]
+$addTextDisplay[📉 Lowest (24h): **$var[$]**$numberSeparator[$round[$httpResult[0;low_24h]]];btc]
+$addSeparator[true;Small;btc]
+$addTextDisplay[-# Source www.coingeko.com;btc]`
+        };
+
+        function switchTab(type, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('code-content').innerText = codes[type];
+        }
+
+        function copyCode() {
+            const code = document.getElementById('code-content').innerText;
+            const btn = document.querySelector('.copy-btn');
+            navigator.clipboard.writeText(code).then(() => {
+                btn.innerText = 'Copied!';
+                setTimeout(() => { btn.innerText = 'Copy'; }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

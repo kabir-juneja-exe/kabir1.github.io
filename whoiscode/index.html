@@ -219,7 +219,7 @@ $httpResult
 $endasync
 $var[joined;&lt;t:$trimSpace[$await[joined]]:R&gt; ( &lt;t:$trimSpace[$await[joined]]&gt; )]
 $addContainer[who;$getRoleColor[$highestRole[$var[user]]]]
-$addTextDisplay[-# $replaceText[$replaceText[$replaceText[$replaceText[$getUserStatus[$var[user]];online;🟢;;1];dnd;🔴;;1];idle;🟡;;1];offline;⚪;;1]  $username[$var[user]] • $var[gname];who]
+$addTextDisplay[-# $replaceText[$replaceText[$replaceText[$replaceText[$getUserStatus[$var[user]];online;🟢;1];dnd;🔴;1];idle;🟡;1];offline;⚪;1]  $username[$var[user]] • $var[gname];who]
 $addSeparator[true;;who]
 $addTextDisplay[__Basic Info__
 Dm's: $replaceText[$replaceText[$isUserDMEnabled[$var[user]];false;❌;;-1];true;✅;;-1]

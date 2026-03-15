@@ -233,7 +233,8 @@ Verification Level: $serverVerificationLvl;si]
 $addSeparator[true;;si]
 $addActionRow[sirow;si]
 $addButtonCV2[serverIcon;Icon;secondary;false;;sirow]
-$addButtonCV2[serverBanner;Banner;secondary;false;;sirow]</pre>
+$addButtonCV2[serverBanner;Banner;secondary;false;;sirow]
+$addButtonCV2[serverEmojis;Emojis;secondary;false;;sirow]</pre>
             </div>
         </div>
     </div>
@@ -284,7 +285,8 @@ Verification Level: $serverVerificationLvl;si]
 $addSeparator[true;;si]
 $addActionRow[sirow;si]
 $addButtonCV2[serverIcon;Icon;secondary;false;;sirow]
-$addButtonCV2[serverBanner;Banner;secondary;false;;sirow]`,
+$addButtonCV2[serverBanner;Banner;secondary;false;;sirow]
+$addButtonCV2[serverEmojis;Emojis;secondary;false;;sirow]`,
             
             button: `$nomention
 
@@ -314,6 +316,14 @@ $addContainer[banner]
 $addTextDisplay[Server Banner;banner]
 $addSeparator[true;;banner]
 $addTextDisplay[$var[banner];banner]
+
+$elseif[$customID==serverEmojis]
+
+$ephemeral
+$addContainer[emoji]
+$addTextDisplay[Emojis;emoji]
+$addSeparator[true;;emoji]
+$addTextDisplay[$serverEmojis[$guildID; , ];emoji]
 
 $endif`
         };

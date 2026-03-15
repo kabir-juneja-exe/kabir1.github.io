@@ -221,7 +221,7 @@ Boost Level: $boostLevel;si]
 $addSeparator[true;;si]
 $addTextDisplay[__Other Info__
 Highest Role: $roleName[$highestRole]
-Server Owner: $username[$serverOwner]
+Server Owner: $displayName[$serverOwner] ($username[$serverOwner])
 Role Count: $roleCount
 Emoji Count: $emoteCount
 Catagory Count: $categoryCount
@@ -269,7 +269,7 @@ Boost Level: $boostLevel;si]
 $addSeparator[true;;si]
 $addTextDisplay[__Other Info__
 Highest Role: $roleName[$highestRole]
-Server Owner: $username[$serverOwner]
+Server Owner: $displayName[$serverOwner] ($username[$serverOwner])
 Role Count: $roleCount
 Emoji Count: $emoteCount
 Catagory Count: $categoryCount
@@ -278,18 +278,16 @@ Verification Level: $serverVerificationLvl;si]
 $addSeparator[true;;si]
 $addActionRow[sirow;si]
 $addButtonCV2[serverIcon;Icon;secondary;false;;sirow]
-$addButtonCV2[serverBanner;Banner;secondary;false;;sirow]
-`,
+$addButtonCV2[serverBanner;Banner;secondary;false;;sirow]`,
             
             button: `$nomention
 
 $if[$customID==serverIcon]
 $ephemeral
 $addContainer[icon]
-$addTextDisplay[Server Icon
-
-$serverIcon;icon]
+$addTextDisplay[Server Icon;icon]
 $addSeparator[true;;icon]
+$addTextDisplay[[URL\]($serverIcon);icon]
 
 $elseif[$customID==serverBanner]
 $ephemeral
@@ -299,7 +297,7 @@ $httpAddHeader[guild-id;$guildID]
 $httpGet[https://bdfddata.rickyjs.xyz/release/guild]
 
 $if[$httpResult[details;banner]==]
-$var[banner;No Banner]
+$var[banner;This server doesn't have banner]
 
 $else
 $var[banner;[URL\]($httpResult[details;banner])]
@@ -307,9 +305,9 @@ $var[banner;[URL\]($httpResult[details;banner])]
 $endif
 
 $addContainer[banner]
-$addTextDisplay[Server Banner
-
-$var[banner];banner]
+$addTextDisplay[Server Banner;banner]
+$addSeparator[true;;banner]
+$addTextDisplay[$var[banner];banner]
 
 $endif`
         };
